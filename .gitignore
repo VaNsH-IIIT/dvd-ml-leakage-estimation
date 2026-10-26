@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Local-only tool builds (FinFET toolchain, ngspice 47 build) - not used by the project
+tools/
+
+# Course lecture slides (not needed to run the project)
+lecture-slides/
+
+# Bulky generated simulation output (datasets are committed separately when final)
+runs/
+*.raw
+*.log
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Regenerable training-only blocks (scripts/a1_generate_data.py --extra 8, a1b_edge_data.py)
+data/partA_extra/
+data/partA_edge/
+reports/REPORT.html
