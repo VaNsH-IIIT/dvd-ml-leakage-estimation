@@ -1,0 +1,5 @@
+case,terminal,scale,median,p95,mean,within_1pct
+NMOS_OFF,ilo,constant,2.84326,16.3835,6.21584,21
+NMOS_OFF,ilo,gate,0.964688,7.29423,2.76552,51.2
+PMOS_OFF,ihi,constant,4.77529,29.8027,10.9411,11.2
+PMOS_OFF,ihi,gate,1.85871,8.07815,5.198,29.9333
