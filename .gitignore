@@ -23,4 +23,3 @@ runs/
 # Regenerable training-only blocks (scripts/a1_generate_data.py --extra 8, a1b_edge_data.py)
 data/partA_extra/
 data/partA_edge/
-reports/REPORT.html

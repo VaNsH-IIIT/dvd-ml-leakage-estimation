@@ -12,14 +12,16 @@
 | 7 | Gate parity plot, log axes | `reports/partB/gates_parity.png` | ✅ |
 | 8 | Test-circuit metrics + parity plot | `reports/partC/PARITY.md`, `parity_parity.png` | ✅ |
 | 9 | Scripts that regenerate everything in order, fixed seeds | `scripts/` (run order in `README.md`) | ✅ The earlier version was verified by a full rerun from a clean clone (25 Oct 2026). The final version was checked in parts: training and selection are deterministic, and the downstream scripts reproduce every committed file from the saved models; record in `reports/REGENERATION.md`. |
-| 10 | Typed report | `reports/REPORT.pdf` (source `reports/REPORT.md`, built by `scripts/e1_build_report.py`) | ✅ |
+| 10 | Typed report | `reports/REPORT.pdf` (LaTeX source `reports/REPORT.tex`) | ✅ |
 
 Fresh-data check: `reports/FRESH_CHECK.md` (`scripts/d3_fresh_check.py`) scores the final pipeline on newly drawn seeds: gates 0.50 % mean, parity checker 0.52 % mean.
 
 Also recorded, as the doc asks for each gate case: SPICE leakage, ML leakage, internal node voltages (SPICE and ML-solved) and SPICE output voltage, all in `data/partB/gates_ml.csv`.
 
 ## Choices discussed with the TAs
-- Leakage = all current drawn from VDD-level sources (VDD supply + inputs held at VDD, i.e. static power / VDD). The TAs left the definition to us; `reports/partB/LEAKAGE_COMPONENTS.md` shows what it consists of, and section 5 of the report shows why it composes into the circuit leakage.
+- Leakage = all current drawn from VDD-level sources (VDD supply + inputs held at VDD, i.e. static power / VDD). The TAs left the definition to us; `reports/partB/LEAKAGE_COMPONENTS.md` shows what it consists of, and section 6 of the report shows why it composes into the circuit leakage.
 - Sizing: L = 45 nm fixed, widths 1–8 × Lmin; each corner draws one NMOS width and one PMOS width (as advised by the TAs).
 - XOR2 for the parity checker built from 4 NAND2 (confirmed by the TAs).
 - Accuracy target read as mean per-sample error below 1 % (confirmed by the TAs).
+- Training on extra samples beyond the doc's 10,000 per case (confirmed by the TAs); validation and test rows come only from the doc's datasets.
+- Four techniques compared per transistor case, one final model kept per case (as the TAs asked).

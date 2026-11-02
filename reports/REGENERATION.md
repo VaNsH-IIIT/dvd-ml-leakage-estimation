@@ -5,7 +5,7 @@
 After the TAs' answers the gates and the parity checker were re-simulated with random widths and the total-leakage definition, and the transistor models were retrained (three 87,000-row ensemble variants and their averages). Checks on this version:
 - **Training is deterministic.** The plain-current 87,000-row ensembles were retrained from scratch for three of the four cases (the NMOS ON run was interrupted, so the earlier run of the same model is used, relabelled as `mlp_ens3_cur`; its predictions are unchanged); the three agree with the earlier runs to all printed digits of the validation metrics.
 - **Selection is deterministic.** `a4_select_models.py` run twice gives the same choice and test metrics.
-- **Downstream outputs reproduce.** In a staged rebuild of the repository from `WORK_SPLIT.md` (a fresh copy of the committed files), `b2_gates_ml.py`, `c2_parity_ml.py`, `d1_error_analysis.py` and `d3_fresh_check.py` rerun with the saved models leave every committed file unchanged.
+- **Downstream outputs reproduce.** In a staged rebuild of the repository (a fresh copy of the committed files), `b2_gates_ml.py`, `c2_parity_ml.py`, `d1_error_analysis.py` and `d3_fresh_check.py` rerun with the saved models leave every committed file unchanged.
 - A full clean-clone rerun including all training takes about 6 hours on 16 cores and was done for the earlier version below.
 
 ## Earlier version (25 Oct 2026)
