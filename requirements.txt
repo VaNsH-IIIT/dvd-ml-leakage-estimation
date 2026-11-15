@@ -2,12 +2,6 @@ numpy
 pandas
 scipy
 scikit-learn
-xgboost
 lightgbm
 matplotlib
-seaborn
-openpyxl
 joblib
-tqdm
-jupyter
-pymupdf

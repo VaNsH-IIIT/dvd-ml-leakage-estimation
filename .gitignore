@@ -2,15 +2,8 @@
 .venv/
 __pycache__/
 *.pyc
-.ipynb_checkpoints/
 
-# Local-only tool builds (FinFET toolchain, ngspice 47 build) - not used by the project
-tools/
-
-# Course lecture slides (not needed to run the project)
-lecture-slides/
-
-# Bulky generated simulation output (datasets are committed separately when final)
+# Generated simulation output
 runs/
 *.raw
 *.log

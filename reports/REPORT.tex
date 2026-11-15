@@ -381,7 +381,10 @@ CMOS gates, with AND2/OR2 = NAND2/NOR2 + INV. Each gate was simulated for every 
 
 \paragraph{What is the leakage made of?} We repeated every gate simulation with the model's gate
 tunnelling switched off (\texttt{igcmod = igbmod = 0}, \file{scripts/b3_leakage_components.py}).
-What remains is sub-threshold plus junction current.
+What remains is sub-threshold plus junction current. Our netlists, like the professor's sample
+netlist, give the transistors no source/drain diffusion area or perimeter, so BSIM4's junction leakage
+is almost zero: the OFF body current stays at about $10^{-14}$\,A whatever the width. This part is
+therefore almost entirely sub-threshold current.
 
 \begin{table}[H]
 \centering
@@ -669,6 +672,41 @@ $W_n = 306$\,nm) and corner 173 (124\,\textdegree C, NMOS \texttt{vth0} $-8$\pct
 6.2\pct\ in single gate cases. There the OFF current exceeds anything in the training data and a tanh
 network flattens out; the linear-baseline variant helps most here.
 
+\paragraph{Which transistors carry the gate error.} The gate leakage is a linear combination of the
+transistor currents, so each run's ML error splits exactly into one part per transistor: its ML
+currents minus its currents when simulated alone in SPICE at the same voltages, passed through the
+same cut (\file{scripts/d5_error_attribution.py}, \file{reports/partB/ERROR_ATTRIBUTION.md}).
+Table~\ref{tab:attrib} shows the result. ON transistors contribute only through their gate
+tunnelling current (their channel currents cancel inside the cut), and OFF transistors through their
+channel current. The stacked OFF transistors with a small $V_{ds}$ lie outside the cut and contribute
+nothing, and the body current is negligible. In the least accurate case, NAND2 00, the ON PMOS gate
+current is the largest error in 88\pct\ of the corners: these devices sit at $V_d \approx V_s \approx
+V_{DD}$, a corner of the training data.
+
+\begin{table}[H]
+\centering
+\caption{Share of the gate-leakage error by transistor and current, all 3,600 gate simulations.}
+\label{tab:attrib}
+\begin{tabular}{lll}
+\toprule
+Transistor & Current that carries the error & Share of the error \\
+\midrule
+PMOS ON & gate ($I_g$) & 29\pct \\
+NMOS ON & gate ($I_g$) & 22\pct \\
+PMOS OFF, full $V_{DD}$ across & channel ($I_d$, $I_s$) & 24\pct \\
+NMOS OFF, full $V_{DD}$ across & channel ($I_d$, $I_s$) & 24\pct \\
+OFF, stacked (small $V_{ds}$) & -- & 0\pct \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Are the SPICE references right?} A DC solve can converge to a wrong operating point, which
+would corrupt a reference without any warning. We solved every gate run and 597 parity checker runs
+(the 300 with the largest ML error and 300 random ones) again, starting from every internal node at
+0\,V and at $V_{DD}$ (\file{scripts/d4_op_check.py}, \file{reports/SPICE_CHECK.md}). Every run
+returned the same leakage to within 0.0001\pct, including the worst corners above, so their errors
+come from the models and not from the references.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\linewidth]{error_vs_corner.png}
@@ -695,6 +733,10 @@ network flattens out; the linear-baseline variant helps most here.
     \item \textbf{Composition from stand-alone gates.} Inside the circuit the gate inputs are up to
     18\,mV off the rails, which leaves 0.18\pct\ median between the sum of SPICE gate values and the
     full circuit.
+    \item \textbf{Inherited from the specification.} The netlists have no source/drain diffusion area,
+    so junction leakage is almost absent (Section~\ref{sec:gates}); with junction areas it would grow
+    with the width. Only \texttt{toxe} is varied, while BSIM4's physical oxide thickness \texttt{toxp}
+    stays nominal, so the oxide variation is only partly represented.
     \item \textbf{Scope.} One model file, nominal $V_{DD} = 0.9$\,V, DC leakage only. Within a gate or
     circuit all NMOS share one width and all PMOS another; mixed sizings need no new models, only new
     SPICE references.

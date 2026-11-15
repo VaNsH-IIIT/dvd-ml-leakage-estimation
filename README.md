@@ -95,6 +95,8 @@ python scripts/c1_parity_spice.py     # parity checker SPICE (51,200 runs, ~5 mi
 python scripts/c2_parity_ml.py        # parity checker ML vs SPICE
 python scripts/d1_error_analysis.py   # error analysis -> reports/ERROR_ANALYSIS.md
 python scripts/d3_fresh_check.py      # final pipeline on fresh seeds -> reports/FRESH_CHECK.md (~5 min)
+python scripts/d4_op_check.py         # SPICE references re-solved from other starting points -> reports/SPICE_CHECK.md (~5 min)
+python scripts/d5_error_attribution.py   # which transistors carry the gate error -> reports/partB/ERROR_ATTRIBUTION.md (~2 min)
 tectonic reports/REPORT.tex           # the report -> reports/REPORT.pdf
 ```
 
@@ -106,17 +108,17 @@ The Gaussian-process fits need about 2 GB of memory each; run at most two at a t
 |---|---|
 | `DVD_ML_Project.pdf` | Official project document |
 | `problem-statement/` | Professor's original files: annotated slides, sample netlist, `model.tar` (unchanged) |
-| `models/` | Extracted PTM model cards (`45nm_MGK.pm` is ours) |
+| `models/` | Model cards from the course `model.tar`: `45nm_MGK.pm` (ours) and `22nm_MGK.pm` (used by the professor's sample netlist in `verify_sim.py`) |
 | `sim/` | Team spec and sampling (`spec.py`), single-transistor driver (`runner.py`), gates (`gates.py`), parity checker (`parity.py`) |
 | `ml/` | Features and targets (`data.py`), model types (`models.py`), gate-leakage composition (`gate_eval.py`), metrics |
 | `analysis/` | Shared plot style |
-| `scripts/` | The pipeline above: `verify_sim.py`; `a*` Part A; `b*` Part B; `c*` Part C; `d*` error analysis, gate diagnostics and fresh-data check; `demo_predict.py` |
+| `scripts/` | The pipeline above: `verify_sim.py`; `a*` Part A; `b*` Part B; `c*` Part C; `d*` error analysis, gate diagnostics, fresh-data check, SPICE reference check and error attribution; `demo_predict.py` |
 | `data/partA/` | The four 10,000-row datasets with the project document's columns |
 | `data/partA_results/` | Model comparison, data-size and ensemble results |
 | `data/partB/`, `data/partC/` | Corners, SPICE references, ML predictions |
 | `netlists/` | Example netlists: one per transistor case, per gate, and the test circuit |
 | `trained_models/` | The four chosen models (`joblib.load(...).predict(df)` → id, ig, is, ib) |
-| `reports/` | `REPORT.pdf` / `REPORT.tex` (the report) and the detailed result pages: `partA/DATA_CHECK.md`, `partA/MODELS.md`, `partB/GATES.md`, `partB/LEAKAGE_COMPONENTS.md`, `partB/GATES_DIAGNOSTICS.md`, `partC/PARITY.md`, `ERROR_ANALYSIS.md`, `FRESH_CHECK.md`, `REGENERATION.md`, with their figures |
+| `reports/` | `REPORT.pdf` / `REPORT.tex` (the report) and the detailed result pages: `partA/DATA_CHECK.md`, `partA/MODELS.md`, `partB/GATES.md`, `partB/LEAKAGE_COMPONENTS.md`, `partB/GATES_DIAGNOSTICS.md`, `partB/ERROR_ATTRIBUTION.md`, `partC/PARITY.md`, `ERROR_ANALYSIS.md`, `FRESH_CHECK.md`, `SPICE_CHECK.md`, `REGENERATION.md`, with their figures |
 | `DELIVERABLES.md` | Checklist of the project document's deliverables and where each one is |
 
 ## Workflow

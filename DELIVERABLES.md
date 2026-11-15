@@ -14,6 +14,8 @@
 | 9 | Scripts that regenerate everything in order, fixed seeds | `scripts/` (run order in `README.md`) | ✅ The earlier version was verified by a full rerun from a clean clone (25 Oct 2026). The final version was checked in parts: training and selection are deterministic, and the downstream scripts reproduce every committed file from the saved models; record in `reports/REGENERATION.md`. |
 | 10 | Typed report | `reports/REPORT.pdf` (LaTeX source `reports/REPORT.tex`) | ✅ |
 
+SPICE reference check: `reports/SPICE_CHECK.md` (`scripts/d4_op_check.py`): every gate reference and 597 parity references re-solved from other starting points agree to 0.0001 %. Error attribution by transistor: `reports/partB/ERROR_ATTRIBUTION.md` (`scripts/d5_error_attribution.py`).
+
 Fresh-data check: `reports/FRESH_CHECK.md` (`scripts/d3_fresh_check.py`) scores the final pipeline on newly drawn seeds: gates 0.50 % mean, parity checker 0.52 % mean.
 
 Also recorded, as the doc asks for each gate case: SPICE leakage, ML leakage, internal node voltages (SPICE and ML-solved) and SPICE output voltage, all in `data/partB/gates_ml.csv`.
